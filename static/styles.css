@@ -22,3 +22,22 @@ h1{
   box-shadow: 0 15px 25px rgba(0,0,0,.6);
   border-radius: 10px;
 }
+
+.login-box h2 {
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+label[for="joueur1"], label[for="joueur2"], label[for="diff-select"] {
+    color: rgb(255, 255, 255);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+div[class="Start"]{
+    text-align: center;
+    margin-top: 30px;
+}
