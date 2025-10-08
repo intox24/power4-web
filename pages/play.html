@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">    
-<head>
-    <meta charset="UTF-8">
-    <title>Power 4 Game</title>
-    <link rel="stylesheet" href="/static/styles.css">
-</head>
-<body>
-    <h1>Power 4 Game</h1>
-    
-</body>
+<table>
+  {{range $i, $row := .tableau}}
+  <tr>
+    {{range $j, $cell := $row}}
+    <td>
+      {{if eq $cell "."}}
+      <form action="/play" method="POST" style="display:inline;">
+        <input type="hidden" name="column" value="{{$j}}">
+        <button type="submit">⬤</button>
+      </form>
+      {{else}}
+      {{$cell}}
+      {{end}}
+    </td>
+    {{end}}
+  </tr>
+  {{end}}
+</table>
+
 </html>
