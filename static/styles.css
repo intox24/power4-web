@@ -41,3 +41,94 @@ div[class="Start"]{
     text-align: center;
     margin-top: 30px;
 }
+
+/* Styles spécifiques au tableau du jeu (n'affecte que le tableau avec border="1") */
+table[border="1"] {
+    margin: 20px auto; /* centrer le tableau */
+    border-collapse: collapse;
+    background: rgba(255,255,255,0.06);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+}
+
+table[border="1"] th,
+table[border="1"] td {
+    width: 56px; /* cellules carrées approximatives */
+    height: 56px;
+    text-align: center;
+    vertical-align: middle;
+    border: 2px solid rgba(255,255,255,0.12);
+    color: white;
+    font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* En-tête : boutons pour choisir la colonne */
+table[border="1"] thead th {
+    background: rgba(255,255,255,0.04);
+    padding: 6px;
+}
+
+table[border="1"] thead button {
+    background: linear-gradient(180deg,#2b6ea3,#1f5a8a);
+    color: #fff;
+    border: none;
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+table[border="1"] thead button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(31,90,138,0.35);
+}
+
+/* Texte des jetons */
+table[border="1"] td {
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+/* Message de victoire */
+
+/* Responsive : réduire la taille des cellules sur petits écrans */
+@media (max-width: 480px) {
+    table[border="1"] th,
+    table[border="1"] td {
+        width: 40px;
+        height: 40px;
+    }
+    table[border="1"] thead button {
+        padding: 4px 6px;
+        font-size: 13px;
+    }
+    
+    .MessGagnant {
+        font-size: 20px;
+        padding: 15px;
+        margin: 15px;
+    }
+}
+
+/* Boutons de navigation */
+.reset-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6) !important;
+}
+
+.home-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6) !important;
+}
+
+.reset-btn, .home-btn {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+}
+
+@media (max-width: 480px) {
+    .reset-btn, .home-btn {
+        display: block;
+        margin: 10px auto;
+        width: 200px;
+    }
+}

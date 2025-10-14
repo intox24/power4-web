@@ -1,22 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">    
-<table>
-  {{range $i, $row := .tableau}}
-  <tr>
-    {{range $j, $cell := $row}}
-    <td>
-      {{if eq $cell "."}}
-      <form action="/play" method="POST" style="display:inline;">
-        <input type="hidden" name="column" value="{{$j}}">
-        <button type="submit">⬤</button>
-      </form>
-      {{else}}
-      {{$cell}}
-      {{end}}
-    </td>
-    {{end}}
-  </tr>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/static/styles.css">
+  <title>Puissance 4</title>
+</head>
+<body>
+  <h1>Tour du joueur {{.Joueur}}</h1>
+  {{if .Gagnant}}
+  <div class="victory-message" style="background: linear-gradient(90deg, #ff8a00, #e52e71); color: white; padding: 20px; border-radius: 12px; box-shadow: 0 8px 20px rgba(229, 46, 71, 0.5); text-align: center;">
+    🏆 VICTOIRE POUR {{.Gagnant}} ! 🏆
+  </div>
   {{end}}
-</table>
-
+  
+  <div style="text-align: center; margin: 20px 0;">
+    <a href="/reset" class="reset-btn" style="display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); transition: all 0.3s ease;">
+      🔄 Nouvelle partie
+    </a>
+    <a href="/" class="home-btn" style="display: inline-block; background: linear-gradient(135deg, #f093fb, #f5576c); color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4); margin-left: 10px; transition: all 0.3s ease;">
+      🏠 Accueil
+    </a>
+  </div>
+  <table border="1">
+    {{if and (gt (len .Tableau) 0) (not .Gagnant)}}
+    <thead>
+      <tr>
+        {{range $j, $_ := index .Tableau 0}}
+        <th>
+          <form action="/play" method="POST" style="display:inline">
+            <input type="hidden" name="colonne" value="{{$j}}">
+            <button type="submit">Col {{$j}}</button>
+          </form>
+        </th>
+        {{end}}
+      </tr>
+    </thead>
+    {{end}}
+    <tbody>
+    {{range $i, $rows := .Tableau}}
+    <tr>
+      {{range $j, $cell := $rows}}
+      <td>
+        {{if eq $cell "."}}
+        .
+        {{else if eq $cell "X"}}
+        X
+        {{else if eq $cell "O"}}
+        O
+        {{else}}
+        {{$cell}}
+        {{end}}
+      </td>
+      {{end}}
+    </tr>
+    {{end}}
+    </tbody>
+  </table>
+</body>
 </html>
