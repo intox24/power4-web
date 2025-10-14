@@ -42,27 +42,28 @@ div[class="Start"]{
     margin-top: 30px;
 }
 
-/* Styles spécifiques au tableau du jeu (n'affecte que le tableau avec border="1") */
 table[border="1"] {
-    margin: 20px auto; /* centrer le tableau */
+    margin: 20px auto;
     border-collapse: collapse;
     background: rgba(255,255,255,0.06);
     box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    max-width: 90vw;
+    overflow-x: auto;
 }
 
 table[border="1"] th,
 table[border="1"] td {
-    width: 56px; /* cellules carrées approximatives */
-    height: 56px;
+    width: 50px;
+    height: 50px;
     text-align: center;
     vertical-align: middle;
     border: 2px solid rgba(255,255,255,0.12);
     color: white;
     font-weight: 600;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-width: 40px;
 }
 
-/* En-tête : boutons pour choisir la colonne */
 table[border="1"] thead th {
     background: rgba(255,255,255,0.04);
     padding: 6px;
@@ -83,23 +84,22 @@ table[border="1"] thead button:hover {
     box-shadow: 0 6px 14px rgba(31,90,138,0.35);
 }
 
-/* Texte des jetons */
 table[border="1"] td {
     font-size: 18px;
     letter-spacing: 1px;
 }
-/* Message de victoire */
 
-/* Responsive : réduire la taille des cellules sur petits écrans */
 @media (max-width: 480px) {
     table[border="1"] th,
     table[border="1"] td {
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
     }
+    
     table[border="1"] thead button {
-        padding: 4px 6px;
-        font-size: 13px;
+        padding: 2px 4px;
+        font-size: 10px;
     }
     
     .MessGagnant {
@@ -109,7 +109,20 @@ table[border="1"] td {
     }
 }
 
-/* Boutons de navigation */
+@media (max-width: 768px) {
+    table[border="1"] th,
+    table[border="1"] td {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+    
+    table[border="1"] thead button {
+        padding: 3px 5px;
+        font-size: 11px;
+    }
+}
+
 .reset-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6) !important;

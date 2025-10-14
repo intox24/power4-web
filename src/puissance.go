@@ -113,7 +113,7 @@ func VictoireDiagonaleA(tableau [][]string, jeton string) bool {
 	if cols < 4 {
 		return false
 	}
-		for i := 3; i < rows; i++ {
+	for i := 3; i < rows; i++ {
 		for j := 0; j <= cols-4; j++ {
 			if tableau[i][j] == jeton && tableau[i-1][j+1] == jeton && tableau[i-2][j+2] == jeton && tableau[i-3][j+3] == jeton {
 				return true
@@ -127,24 +127,48 @@ func Victoire(tableau [][]string, jeton string) bool {
 	return VictoireVerticale(tableau, jeton) || VictoireHorizontale(tableau, jeton) || VictoireDiagonaleD(tableau, jeton) || VictoireDiagonaleA(tableau, jeton)
 }
 
-func Reset(w http.ResponseWriter, r *http.Request) {
-	gagnant = ""
-	JoueurActuel = joueur1
-	TableauJeu(6, 7)
-
-	http.Redirect(w, r, "/play?joueur1="+joueur1+"&joueur2="+joueur2, http.StatusSeeOther)
+func TableauPlein(tableau [][]string) bool {
+	if len(tableau) == 0 {
+		return false
+	}
+	for j := 0; j < len(tableau[0]); j++ {
+		if tableau[0][j] == "." {
+			return false
+		}
+	}
+	return true
 }
+
+var difficulteActuelle string = "difficulte1"
 
 func Play(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		j1 := r.URL.Query().Get("joueur1")
 		j2 := r.URL.Query().Get("joueur2")
+		difficulte := r.URL.Query().Get("difficulte")
+
 		if j1 != "" && j2 != "" {
 			joueur1 = j1
 			joueur2 = j2
 			JoueurActuel = "X"
 			gagnant = ""
-			TableauJeu(6, 7)
+
+			if difficulte != "" {
+				difficulteActuelle = difficulte
+			}
+
+			var rows, cols int
+			switch difficulteActuelle {
+			case "difficulte1":
+				rows, cols = 6, 7
+			case "difficulte2":
+				rows, cols = 6, 9
+			case "difficulte3":
+				rows, cols = 7, 8
+			default:
+				rows, cols = 6, 7
+			}
+			TableauJeu(rows, cols)
 		}
 	}
 
@@ -152,13 +176,7 @@ func Play(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 		col, _ := strconv.Atoi(r.FormValue("colonne"))
 
-		log.Printf("Placement jeton pour %s dans colonne %d", JoueurActuel, col)
-		placed := JetonPlacer(tableau, col, JoueurActuel)
-		log.Printf("Jeton placé: %v", placed)
-
-		for i, row := range tableau {
-			log.Printf("Ligne %d: %v", i, row)
-		}
+		JetonPlacer(tableau, col, JoueurActuel)
 
 		if Victoire(tableau, JoueurActuel) {
 			if JoueurActuel == "X" {
@@ -166,14 +184,14 @@ func Play(w http.ResponseWriter, r *http.Request) {
 			} else {
 				gagnant = joueur2
 			}
-			log.Printf("Victoire pour %s!", gagnant)
+		} else if TableauPlein(tableau) {
+			gagnant = "egalite"
 		} else {
 			if JoueurActuel == "X" {
 				JoueurActuel = "O"
 			} else {
 				JoueurActuel = "X"
 			}
-			log.Printf("Prochain joueur: %s", JoueurActuel)
 		}
 	}
 
@@ -198,8 +216,27 @@ func Play(w http.ResponseWriter, r *http.Request) {
 		Joueur2 string
 	}{Tableau: tableau, Joueur: joueurAffiche, Gagnant: gagnant, Joueur1: joueur1, Joueur2: joueur2}
 
-	log.Printf("Template data - Joueur1: %s, Joueur2: %s, JoueurActuel: %s (%s), Gagnant: %s",
-		joueur1, joueur2, JoueurActuel, joueurAffiche, gagnant)
-
 	tmpl.Execute(w, data)
+}
+
+func Reset(w http.ResponseWriter, r *http.Request) {
+	gagnant = ""
+	JoueurActuel = joueur1
+
+	var rows, cols int
+
+	switch difficulteActuelle {
+	case "difficulte1":
+		rows, cols = 6, 7
+	case "difficulte2":
+		rows, cols = 6, 9
+	case "difficulte3":
+		rows, cols = 7, 8
+	default:
+		rows, cols = 6, 7
+	}
+
+	TableauJeu(rows, cols)
+
+	http.Redirect(w, r, "/play?joueur1="+joueur1+"&joueur2="+joueur2, http.StatusSeeOther)
 }
