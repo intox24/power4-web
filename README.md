@@ -2,7 +2,6 @@
 
 Un jeu de Puissance 4 moderne et élégant développé en Go avec une interface web responsive.
 
-![Go Version](https://img.shields.io/badge/Go-1.22.2-00ADD8?style=flat&logo=go)
 ## Caractéristiques
 
 - **Jeu complet** : Toutes les règles du Puissance 4 implémentées
