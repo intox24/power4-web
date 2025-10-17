@@ -53,8 +53,7 @@ power4-web/
 │   └── play.html          # Interface de jeu
 └── static/
     ├── styles.css         # Styles page d'accueil
-    ├── game.css           # Styles page de jeu
-    └── home.css           # (optionnel) Styles alternatifs
+    └── game.css           # Styles page de jeu
 ```
 
 ## Comment jouer
