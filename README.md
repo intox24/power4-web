@@ -11,8 +11,8 @@ Un jeu de Puissance 4 moderne et élégant développé en Go avec une interface 
   - Facile : Grille 6x7 (classique)
   - Normal : Grille 6x9
   - Difficile : Grille 7x8
-- 📱 **Responsive** : Adapté mobile, tablette et desktop
--  **Reset instantané** : Relancer une partie en un clic
+- **Responsive** : Adapté mobile, tablette et desktop
+- **Reset instantané** : Relancer une partie en un clic
 
 ##  Installation
 
