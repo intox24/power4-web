@@ -2,26 +2,32 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="/static/game.css">
   <title>Puissance 4</title>
 </head>
 <body>
   <h1>Tour du joueur {{.Joueur}}</h1>
   {{if .Gagnant}}
-  <div class="victory-message" style="background: linear-gradient(90deg, #ff8a00, #e52e71); color: white; padding: 20px; border-radius: 12px; box-shadow: 0 8px 20px rgba(229, 46, 71, 0.5); text-align: center;">
-    🏆 VICTOIRE POUR {{.Gagnant}} ! 🏆
-  </div>
+    {{if eq .Gagnant "egalite"}}
+      <div class="draw-message">
+        🤝 MATCH NUL ! 🤝
+      </div>
+    {{else}}
+      <div class="victory-message">
+        🏆 VICTOIRE POUR {{.Gagnant}} ! 🏆
+      </div>
+    {{end}}
   {{end}}
   
   <div style="text-align: center; margin: 20px 0;">
-    <a href="/reset" class="reset-btn" style="display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); transition: all 0.3s ease;">
+    <a href="/reset" class="reset-btn">
       🔄 Nouvelle partie
     </a>
-    <a href="/" class="home-btn" style="display: inline-block; background: linear-gradient(135deg, #f093fb, #f5576c); color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4); margin-left: 10px; transition: all 0.3s ease;">
+    <a href="/" class="home-btn">
       🏠 Accueil
     </a>
   </div>
-  <table border="1">
+  <table>
     {{if and (gt (len .Tableau) 0) (not .Gagnant)}}
     <thead>
       <tr>
@@ -42,13 +48,13 @@
       {{range $j, $cell := $rows}}
       <td>
         {{if eq $cell "."}}
-        .
+          <span class="empty-cell">○</span>
         {{else if eq $cell "X"}}
-        X
+          <div class="token red" title="{{$.Joueur1}}"></div>
         {{else if eq $cell "O"}}
-        O
+          <div class="token yellow" title="{{$.Joueur2}}"></div>
         {{else}}
-        {{$cell}}
+          {{$cell}}
         {{end}}
       </td>
       {{end}}
